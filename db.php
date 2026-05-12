@@ -1,11 +1,29 @@
 <?php
+// ============================================================
+// FAST FOOD SERVICE — Configuración de Base de Datos
+// ============================================================
+
 $host = "localhost";
-$user = "root"; // Usuario por defecto de XAMPP
-$pass = "";     // Contraseña por defecto vacía
+$user = "root";           // Usuario por defecto de XAMPP
+$pass = "";               // Contraseña por defecto vacía
 $db   = "fast_food_db";
 
-$conexion = mysqli_connect("localhost", "usuario", "password", "nombre_bd");
-if (!$conexion) {
-    die("Error de conexión: " . mysqli_connect_error());
+// Crear conexión PDO
+try {
+    $pdo = new PDO(
+        "mysql:host=$host;dbname=$db;charset=utf8mb4",
+        $user,
+        $pass,
+        [
+            PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+            PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+            PDO::ATTR_EMULATE_PREPARES => false,
+        ]
+    );
+} catch (PDOException $e) {
+    die(json_encode([
+        'success' => false,
+        'error' => 'Error de conexión a BD: ' . $e->getMessage()
+    ]));
 }
 ?>
