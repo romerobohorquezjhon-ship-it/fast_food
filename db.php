@@ -21,6 +21,7 @@ try {
         ]
     );
 } catch (PDOException $e) {
+    http_response_code(500);
     die(json_encode([
         'success' => false,
         'error' => 'Error de conexión a BD: ' . $e->getMessage()
