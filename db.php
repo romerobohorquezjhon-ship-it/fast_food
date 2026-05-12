@@ -5,7 +5,7 @@
 
 $host = "localhost";
 $user = "root";           // Usuario por defecto de XAMPP
-$pass = "";               // Contraseña por defecto vacía
+$pass = "";               // Contraseña por defecto vacía (XAMPP)
 $db   = "fast_food_db";
 
 // Crear conexión PDO

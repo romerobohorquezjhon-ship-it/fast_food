@@ -8,6 +8,26 @@ $host = "localhost";
 $user = "root";
 $pass = "";
 
+echo "<!DOCTYPE html>
+<html lang='es'>
+<head>
+    <meta charset='UTF-8'>
+    <title>FastFood - Instalación</title>
+    <style>
+        body { font-family: 'DM Sans', sans-serif; background: #0f172a; color: #fff; padding: 40px; text-align: center; }
+        .container { max-width: 600px; margin: 0 auto; background: #1e293b; border-radius: 12px; padding: 30px; }
+        .success { color: #059669; font-size: 24px; margin-bottom: 20px; }
+        .error { color: #dc2626; font-size: 24px; margin-bottom: 20px; }
+        h1 { margin-top: 0; color: #06b6d4; }
+        .info { background: #1a3a3a; border-left: 4px solid #06b6d4; padding: 15px; text-align: left; margin: 20px 0; border-radius: 6px; }
+        a { color: #06b6d4; text-decoration: none; font-weight: bold; }
+    </style>
+</head>
+<body>
+<div class='container'>
+    <h1>🍔 Fast Food Service</h1>
+    <h2>Script de Instalación</h2>";
+
 try {
     $pdo = new PDO("mysql:host=$host;charset=utf8mb4", $user, $pass);
     
@@ -51,13 +71,35 @@ try {
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci
     ");
     
-    echo "✅ Base de datos creada exitosamente!<br><br>";
-    echo "📊 Tablas creadas:<br>";
-    echo "• usuarios<br>";
-    echo "• pedidos<br><br>";
-    echo "🚀 Ahora puedes acceder a: <a href='index.html'>Login</a>";
+    echo "<div class='success'>✅</div>
+    <h3>Base de datos creada exitosamente!</h3>
+    <div class='info'>
+        <strong>📊 Tablas creadas:</strong><br>
+        • usuarios<br>
+        • pedidos
+    </div>
+    <div class='info'>
+        <strong>🚀 Próximos pasos:</strong><br>
+        1. Accede a: <a href='index.html'>Ir al Login</a><br>
+        2. Crea tu primera cuenta de empleado<br>
+        3. ¡Comienza a usar el sistema!
+    </div>";
     
 } catch (PDOException $e) {
-    echo "❌ Error: " . $e->getMessage();
+    echo "<div class='error'>❌</div>
+    <h3>Error en la instalación</h3>
+    <div class='info' style='border-left-color: #dc2626; background: #3a1a1a;'>
+        <strong>Error:</strong><br>" . $e->getMessage() . "
+    </div>
+    <p>Verifica que:</p>
+    <div class='info'>
+        ✓ MySQL/XAMPP está corriendo<br>
+        ✓ Usuario 'root' existe sin contraseña<br>
+        ✓ El archivo db.php está en la misma carpeta
+    </div>";
 }
+
+echo "</div>
+</body>
+</html>";
 ?>
