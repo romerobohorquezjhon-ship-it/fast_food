@@ -586,25 +586,38 @@ document.addEventListener('DOMContentLoaded', () => {
     if (loginForm) {
         if (getSession()) { window.location.href = 'roles1.html'; return; }
 
-        loginForm.addEventListener('submit', e => {
-            e.preventDefault();
-            const nombre = document.getElementById('login-nombre').value.trim();
-            const pass   = document.getElementById('login-pass').value;
-            if (!nombre || !pass) { showToast('Completa todos los campos', 'error'); return; }
+        loginForm.addEventListener('submit', async e => {
+    e.preventDefault();
+    const nombre = document.getElementById('login-nombre').value.trim();
+    const pass   = document.getElementById('login-pass').value;
+    
+    if (!nombre || !pass) { 
+        showToast('Completa todos los campos', 'error'); 
+        return; 
+    }
 
-            const user = getUsers().find(
-                u => u.nombre.toLowerCase() === nombre.toLowerCase() && u.password === pass
-            );
-            if (!user) {
-                showToast('Nombre o contraseña incorrectos', 'error');
-                document.getElementById('login-pass').value = '';
-                document.getElementById('login-pass').focus();
-                return;
-            }
-            localStorage.setItem('ff_session', user.nombre);
-            showToast(`¡Bienvenido de nuevo, ${user.nombre}! 👋`, 'success');
-            setTimeout(() => window.location.href = 'roles1.html', 900);
+    try {
+        const response = await fetch('api.php?action=login', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ user: nombre, pass })
         });
+        
+        const result = await response.json();
+        
+        if (result.success) {
+            localStorage.setItem('ff_session', result.nombre);
+            showToast(`¡Bienvenido de nuevo, ${result.nombre}! 👋`, 'success');
+            setTimeout(() => window.location.href = 'roles1.html', 900);
+        } else {
+            showToast('Usuario o contraseña incorrectos', 'error');
+            document.getElementById('login-pass').value = '';
+            document.getElementById('login-pass').focus();
+        }
+    } catch (error) {
+        showToast('Error de conexión con el servidor', 'error');
+    }
+});
 
         // Mostrar contador de empleados registrados
         const userCount = getUsers().length;
@@ -614,41 +627,54 @@ document.addEventListener('DOMContentLoaded', () => {
             : 'Sin empleados aún — regístrate primero';
     }
 
+    
     // ── REGISTRO (registro1.html) ──
-    const regForm = document.getElementById('regForm');
-    if (regForm && !regForm.dataset.handled) {
-        regForm.dataset.handled = 'true';
-        regForm.addEventListener('submit', e => {
-            e.preventDefault();
-            const nombre    = document.getElementById('nombre').value.trim();
-            const apellidos = document.getElementById('apellidos').value.trim();
-            const telefono  = document.getElementById('telefono').value.trim();
-            const correo    = document.getElementById('correo_electronico').value.trim();
-            const pass      = document.getElementById('password').value;
-            const pass2     = document.getElementById('password2').value;
+  // ── REGISTRO (registro1.html) ──
+const regForm = document.getElementById('regForm');
+if (regForm && !regForm.dataset.handled) {
+    regForm.dataset.handled = 'true';
+    regForm.addEventListener('submit', async e => {
+        e.preventDefault();
+        const nombre    = document.getElementById('nombre').value.trim();
+        const apellidos = document.getElementById('apellidos').value.trim();
+        const telefono  = document.getElementById('telefono').value.trim();
+        const correo    = document.getElementById('correo_electronico').value.trim();
+        const pass      = document.getElementById('password').value;
+        const pass2     = document.getElementById('password2').value;
 
-            if (!nombre || !apellidos || !telefono || !correo || !pass) {
-                showToast('Completa todos los campos obligatorios', 'error'); return;
-            }
-            if (pass.length < 4) {
-                showToast('La contraseña debe tener al menos 4 caracteres', 'warning'); return;
-            }
-            if (pass !== pass2) {
-                showToast('Las contraseñas no coinciden', 'error'); return;
-            }
-            const users = getUsers();
-            if (users.find(u => u.nombre.toLowerCase() === nombre.toLowerCase())) {
-                showToast('Ya existe un usuario con ese nombre', 'error'); return;
-            }
+        if (!nombre || !apellidos || !telefono || !correo || !pass) {
+            showToast('Completa todos los campos obligatorios', 'error'); return;
+        }
+        if (pass.length < 4) {
+            showToast('La contraseña debe tener al menos 4 caracteres', 'warning'); return;
+        }
+        if (pass !== pass2) {
+            showToast('Las contraseñas no coinciden', 'error'); return;
+        }
 
-            users.push({ nombre, apellidos, telefono, correo, password: pass,
-                         fechaRegistro: new Date().toLocaleDateString('es-CO') });
-            saveUsers(users);
-            localStorage.setItem('ff_session', nombre);
-            showToast(`¡Bienvenido al equipo, ${nombre}! 🎉`, 'success');
-            setTimeout(() => window.location.href = 'roles1.html', 900);
-        });
-    }
+        try {
+            // Enviar a la BD vía API
+            const response = await fetch('api.php?action=register', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ nombre, apellidos, telefono, correo, password: pass })
+            });
+            
+            const result = await response.json();
+            
+            if (result.success) {
+                localStorage.setItem('ff_session', nombre);
+                showToast(`¡Bienvenido al equipo, ${nombre}! 🎉`, 'success');
+                setTimeout(() => window.location.href = 'roles1.html', 900);
+            } else {
+                showToast(result.error || 'Error al registrar', 'error');
+            }
+        } catch (error) {
+            showToast('Error de conexión con el servidor', 'error');
+            console.error(error);
+        }
+    });
+}
 
     // ── SELECCIÓN DE ROL (roles1.html) ──
     const nombreEl = document.getElementById('nombreUsuario');
