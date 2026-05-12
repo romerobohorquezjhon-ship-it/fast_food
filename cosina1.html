@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel Cocina — Fast Food</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="text-slate-200 p-4 md:p-6">
+
+    <!-- ─── HEADER ─── -->
+    <header class="max-w-7xl mx-auto mb-6">
+        <div class="bg-slate-800/80 backdrop-blur-md border border-slate-700 rounded-2xl p-4 md:p-5">
+            <div class="flex flex-wrap justify-between items-center gap-4">
+
+                <!-- Título -->
+                <div>
+                    <div class="flex items-center gap-2 mb-1">
+                        <span class="relative flex h-2.5 w-2.5">
+                            <span class="animate-ping absolute inline-flex h-full w-full rounded-full
+                                         bg-amber-400 opacity-75"></span>
+                            <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-amber-500"></span>
+                        </span>
+                        <p class="text-[9px] text-amber-500 font-black uppercase tracking-[0.25em]">
+                            Monitor en Vivo
+                        </p>
+                    </div>
+                    <h1 class="text-4xl font-black text-white uppercase"
+                        style="font-family:'Bebas Neue',sans-serif; letter-spacing:0.04em; line-height:1">
+                        Panel de Cocina
+                    </h1>
+                </div>
+
+                <!-- Contadores de estado -->
+                <div class="flex items-center gap-4 flex-wrap">
+                    <div class="text-center">
+                        <p class="text-2xl font-black text-amber-400" id="ks-pendiente">0</p>
+                        <p class="text-[9px] text-slate-500 uppercase font-bold tracking-wider">Pendientes</p>
+                    </div>
+                    <div class="w-px h-8 bg-slate-700"></div>
+                    <div class="text-center">
+                        <p class="text-2xl font-black text-blue-400" id="ks-preparando">0</p>
+                        <p class="text-[9px] text-slate-500 uppercase font-bold tracking-wider">Preparando</p>
+                    </div>
+                    <div class="w-px h-8 bg-slate-700"></div>
+                    <div class="text-center">
+                        <p class="text-2xl font-black text-emerald-400" id="ks-listo">0</p>
+                        <p class="text-[9px] text-slate-500 uppercase font-bold tracking-wider">Listos</p>
+                    </div>
+                    <div class="w-px h-8 bg-slate-700"></div>
+                    <div class="text-center">
+                        <p class="text-2xl font-black text-slate-200" id="ks-total">0</p>
+                        <p class="text-[9px] text-slate-500 uppercase font-bold tracking-wider">Total</p>
+                    </div>
+                </div>
+
+                <!-- Botón volver -->
+                <a href="roles1.html"
+                   class="bg-slate-700 hover:bg-red-900/40 hover:text-red-400 text-slate-300
+                          px-4 py-2.5 rounded-xl text-[10px] font-black uppercase transition-all
+                          border border-slate-600 flex items-center gap-2">
+                    ← Cambiar Rol
+                </a>
+
+            </div>
+
+            <!-- Flujo de estados visual -->
+            <div class="mt-4 pt-4 border-t border-slate-700/50
+                        flex items-center gap-2 text-[9px] font-black uppercase tracking-wider flex-wrap">
+                <span class="bg-amber-500/10 text-amber-400 border border-amber-500/30
+                             px-3 py-1 rounded-full">Pendiente</span>
+                <span class="text-slate-600">→</span>
+                <span class="bg-blue-500/10 text-blue-400 border border-blue-500/30
+                             px-3 py-1 rounded-full">En Preparación</span>
+                <span class="text-slate-600">→</span>
+                <span class="bg-emerald-500/10 text-emerald-400 border border-emerald-500/30
+                             px-3 py-1 rounded-full">Listo ✓</span>
+                <span class="text-slate-600">→</span>
+                <span class="bg-violet-500/10 text-violet-400 border border-violet-500/30
+                             px-3 py-1 rounded-full">Despachado 🚚</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- ─── GRID DE PEDIDOS ─── -->
+    <div id="listaPedidos"
+         class="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
+        <!-- Los pedidos se renderizan aquí por JS -->
+    </div>
+
+    <div id="creator-watermark">Fast Food Service © SENA 2025</div>
+
+    <script src="registro.js"></script>
+</body>
+</html>

@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel Admin — Fast Food</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="text-slate-200 p-4 md:p-8 pb-16">
+
+    <!-- ─── HEADER ─── -->
+    <header class="max-w-7xl mx-auto flex flex-wrap justify-between items-center gap-4 mb-8">
+        <div>
+            <p class="text-violet-400 text-[9px] font-black uppercase tracking-[0.3em] mb-1">Administración</p>
+            <h1 class="text-5xl font-black text-white uppercase leading-none"
+                style="font-family:'Bebas Neue',sans-serif; letter-spacing:0.04em;">
+                Panel Admin
+            </h1>
+            <p class="text-xs text-slate-500 mt-1">
+                Sesión: <span id="adm-username" class="text-white font-bold">—</span>
+            </p>
+        </div>
+        <div class="flex items-center gap-3">
+            <button onclick="exportarDatos()"
+                class="bg-slate-700 hover:bg-slate-600 text-white px-4 py-2.5 rounded-xl
+                       text-xs font-black uppercase transition-all border border-slate-600
+                       flex items-center gap-2">
+                📥 Exportar JSON
+            </button>
+            <a href="roles1.html"
+               class="bg-slate-700 hover:bg-slate-600 text-white px-4 py-2.5 rounded-xl
+                      text-xs font-black uppercase transition-all border border-slate-600">
+                ← Cambiar Rol
+            </a>
+        </div>
+    </header>
+
+    <!-- ─── STAT CARDS ─── -->
+    <div class="max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 mb-8">
+
+        <div class="stat-card" style="--stat-accent:#06b6d4;">
+            <p class="stat-value" id="adm-completed">—</p>
+            <p class="stat-label">Pedidos<br>Completados</p>
+            <span class="text-2xl mt-2 block opacity-30">✅</span>
+        </div>
+
+        <div class="stat-card" style="--stat-accent:#f59e0b;">
+            <p class="stat-value" id="adm-active">—</p>
+            <p class="stat-label">Pedidos<br>Activos</p>
+            <span class="text-2xl mt-2 block opacity-30">⏳</span>
+        </div>
+
+        <div class="stat-card" style="--stat-accent:#10b981;">
+            <p class="stat-value text-emerald-400 text-2xl" id="adm-revenue">$0</p>
+            <p class="stat-label">Ingresos<br>Totales</p>
+            <span class="text-2xl mt-2 block opacity-30">💰</span>
+        </div>
+
+        <div class="stat-card" style="--stat-accent:#8b5cf6;">
+            <p class="stat-value text-violet-400 text-2xl" id="adm-avg">$0</p>
+            <p class="stat-label">Promedio<br>por Pedido</p>
+            <span class="text-2xl mt-2 block opacity-30">📊</span>
+        </div>
+
+        <div class="stat-card" style="--stat-accent:#f43f5e;">
+            <p class="stat-value" id="adm-employees">—</p>
+            <p class="stat-label">Empleados<br>Registrados</p>
+            <span class="text-2xl mt-2 block opacity-30">👥</span>
+        </div>
+
+    </div>
+
+    <!-- ─── DOS TABLAS ─── -->
+    <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+
+        <!-- Tabla: Pedidos Completados -->
+        <div class="card">
+            <div class="flex justify-between items-center mb-5">
+                <div>
+                    <h2 class="text-white font-black uppercase text-sm tracking-wider">Pedidos Completados</h2>
+                    <p class="text-xs text-slate-500 mt-0.5">Últimos 25 despachados</p>
+                </div>
+                <span class="text-xs text-cyan-400 font-bold bg-cyan-400/10 border border-cyan-400/20
+                             px-2 py-1 rounded-lg" id="adm-completed-badge">0</span>
+            </div>
+            <div class="overflow-x-auto" style="max-height: 420px; overflow-y: auto;">
+                <table class="admin-table">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Mesa</th>
+                            <th>Mesero</th>
+                            <th>Ítems</th>
+                            <th>Total</th>
+                            <th>Hora</th>
+                        </tr>
+                    </thead>
+                    <tbody id="adm-orders-tbody">
+                        <tr>
+                            <td colspan="6" class="text-center py-10 text-slate-500 text-sm">
+                                Cargando...
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Tabla: Empleados -->
+        <div class="card">
+            <div class="flex justify-between items-center mb-5">
+                <div>
+                    <h2 class="text-white font-black uppercase text-sm tracking-wider">Empleados Registrados</h2>
+                    <p class="text-xs text-slate-500 mt-0.5">Personal del sistema</p>
+                </div>
+                <span class="text-xs text-violet-400 font-bold bg-violet-400/10 border border-violet-400/20
+                             px-2 py-1 rounded-lg" id="adm-employees-badge">0</span>
+            </div>
+            <div class="overflow-x-auto" style="max-height: 420px; overflow-y: auto;">
+                <table class="admin-table">
+                    <thead>
+                        <tr>
+                            <th>Empleado</th>
+                            <th>Teléfono</th>
+                            <th>Registro</th>
+                            <th>Acción</th>
+                        </tr>
+                    </thead>
+                    <tbody id="adm-emp-tbody">
+                        <tr>
+                            <td colspan="4" class="text-center py-10 text-slate-500 text-sm">
+                                Cargando...
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- ─── PEDIDOS ACTIVOS ─── -->
+    <div class="max-w-7xl mx-auto card mb-6">
+        <div class="flex justify-between items-center mb-5">
+            <div>
+                <h2 class="text-white font-black uppercase text-sm tracking-wider">Pedidos Activos en Cocina</h2>
+                <p class="text-xs text-slate-500 mt-0.5">Estado en tiempo real</p>
+            </div>
+            <span id="adm-active-badge"
+                  class="text-xs text-amber-400 font-bold bg-amber-400/10 border border-amber-400/20
+                         px-2 py-1 rounded-lg">0</span>
+        </div>
+        <div id="adm-active-orders" class="text-center py-8 text-slate-500 text-sm">
+            Sin pedidos activos
+        </div>
+    </div>
+
+    <!-- ─── ZONA PELIGROSA ─── -->
+    <div class="max-w-7xl mx-auto">
+        <div class="border border-red-900/40 rounded-2xl p-5 bg-red-950/10">
+            <h3 class="text-red-400 font-black uppercase text-xs tracking-widest mb-2">⚠️ Zona Peligrosa</h3>
+            <p class="text-slate-500 text-xs mb-4">
+                Estas acciones son irreversibles. Úsalas solo para reiniciar el sistema en demostraciones.
+            </p>
+            <div class="flex flex-wrap gap-3">
+                <button onclick="clearOrders()"
+                    class="bg-red-900/30 hover:bg-red-800/40 text-red-400 border border-red-900/40
+                           px-4 py-2 rounded-xl text-xs font-black uppercase transition-all">
+                    Limpiar Pedidos
+                </button>
+                <button onclick="clearAllData()"
+                    class="bg-red-700 hover:bg-red-600 text-white px-4 py-2 rounded-xl
+                           text-xs font-black uppercase transition-all">
+                    Reiniciar Todo el Sistema
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Trigger oculto para inicializar el panel -->
+    <div id="adm-panel-trigger" class="hidden"></div>
+
+    <div id="creator-watermark">Fast Food Service © SENA 2025</div>
+
+    <script src="registro.js"></script>
+    <script>
+        function formatCOP(n) {
+            return '$' + Number(n).toLocaleString('es-CO');
+        }
+
+        function clearOrders() {
+            if (!confirm('¿Borrar todos los pedidos activos y completados?')) return;
+            localStorage.removeItem('ff_orders');
+            localStorage.removeItem('ff_completed');
+            localStorage.removeItem('ff_counter');
+            showToast('Pedidos borrados', 'warning');
+            loadAdminPanel();
+        }
+
+        // Sobrescribir loadAdminPanel para agregar detalles extra del admin
+        const _origLoad = typeof loadAdminPanel !== 'undefined' ? loadAdminPanel : null;
+
+        // Override post-load para badges adicionales
+        const _origInterval = setInterval(() => {
+            // Sync badges
+            const c = JSON.parse(localStorage.getItem('ff_completed') || '[]').length;
+            const a = JSON.parse(localStorage.getItem('ff_orders') || '[]');
+            const e = (JSON.parse(localStorage.getItem('ff_users') || '[]')).length;
+
+            const cb = document.getElementById('adm-completed-badge');
+            const ab = document.getElementById('adm-active-badge');
+            const eb = document.getElementById('adm-employees-badge');
+            if (cb) cb.textContent = c;
+            if (ab) ab.textContent = a.length;
+            if (eb) eb.textContent = e;
+
+            // Pedidos activos en la sección "activos"
+            const container = document.getElementById('adm-active-orders');
+            if (!container) return;
+
+            if (a.length === 0) {
+                container.innerHTML = '<p class="text-slate-500 text-sm text-center py-8">Sin pedidos activos en cocina</p>';
+            } else {
+                const ESTADO_LABEL = { pendiente: '🟡 Pendiente', preparando: '🔵 En Preparación', listo: '🟢 Listo' };
+                container.innerHTML = `<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
+                    ${a.map(o => {
+                        const total = o.items.reduce((s, i) => s + (i.precio||i.p||0)*(i.qty||i.cantidad||1), 0);
+                        const mins = Math.floor((Date.now() - (o.timestamp||Date.now())) / 60000);
+                        return `
+                        <div class="bg-slate-800/60 border border-slate-700 rounded-xl p-3">
+                            <div class="flex justify-between items-start mb-2">
+                                <div>
+                                    <p class="text-white font-black">${o.mesa}</p>
+                                    <p class="text-slate-500 text-xs font-mono">#${o.numero||o.id}</p>
+                                </div>
+                                <span class="text-[9px] font-black text-slate-400 bg-slate-900 px-2 py-0.5 rounded">${o.hora}</span>
+                            </div>
+                            <p class="text-xs text-slate-400 mb-1">Mesero: <span class="text-white font-bold">${o.mesero}</span></p>
+                            <p class="text-xs mb-2">${ESTADO_LABEL[o.estado||'pendiente'] || o.estado}</p>
+                            <div class="flex justify-between items-center">
+                                <span class="text-[10px] text-slate-500">⏱ ${mins} min</span>
+                                <span class="text-cyan-400 font-black text-sm">${formatCOP(total)}</span>
+                            </div>
+                        </div>`;
+                    }).join('')}
+                </div>`;
+            }
+        }, 3000);
+    </script>
+</body>
+</html>

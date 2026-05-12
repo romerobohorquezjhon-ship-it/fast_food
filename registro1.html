@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro de Empleado — Fast Food</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="min-h-screen flex items-center justify-center p-4 py-10">
+
+    <div class="card w-full max-w-sm border-t-4 border-cyan-500 fade-in">
+
+        <!-- Header -->
+        <div class="mb-6">
+            <a href="index.html"
+               class="text-[10px] text-gray-500 hover:text-cyan-400 uppercase tracking-widest
+                      transition-colors font-bold inline-flex items-center gap-1">
+                ← Volver al Login
+            </a>
+            <h2 class="text-3xl font-black text-white mt-3 uppercase"
+                style="font-family:'Bebas Neue',sans-serif; letter-spacing:0.05em;">
+                Registro de Empleado
+            </h2>
+            <p class="text-xs text-gray-500 mt-1">
+                Completa tus datos para acceder al sistema
+            </p>
+        </div>
+
+        <form id="regForm" class="space-y-3">
+
+            <!-- Nombre -->
+            <div>
+                <label class="text-[10px] text-gray-400 uppercase tracking-widest block mb-1.5 font-bold">
+                    Nombre <span class="text-red-500">*</span>
+                </label>
+                <input id="nombre" type="text" placeholder="Ej. María"
+                       class="input-style" required minlength="2" autocomplete="given-name">
+            </div>
+
+            <!-- Apellidos -->
+            <div>
+                <label class="text-[10px] text-gray-400 uppercase tracking-widest block mb-1.5 font-bold">
+                    Apellidos <span class="text-red-500">*</span>
+                </label>
+                <input id="apellidos" type="text" placeholder="Ej. García López"
+                       class="input-style" required minlength="2" autocomplete="family-name">
+            </div>
+
+            <!-- Teléfono -->
+            <div>
+                <label class="text-[10px] text-gray-400 uppercase tracking-widest block mb-1.5 font-bold">
+                    Teléfono <span class="text-red-500">*</span>
+                </label>
+                <input id="telefono" type="tel" placeholder="Ej. 3001234567"
+                       class="input-style" required pattern="[0-9]{7,15}" autocomplete="tel">
+            </div>
+
+            <!-- Correo -->
+            <div>
+                <label class="text-[10px] text-gray-400 uppercase tracking-widest block mb-1.5 font-bold">
+                    Correo Electrónico <span class="text-red-500">*</span>
+                </label>
+                <input id="correo_electronico" type="email" placeholder="Ej. maria@empresa.com"
+                       class="input-style" required autocomplete="email">
+            </div>
+
+            <!-- Separador -->
+            <div class="pt-2 pb-1">
+                <p class="text-[10px] text-gray-600 uppercase tracking-widest font-bold border-t border-gray-800 pt-3">
+                    Credenciales de Acceso
+                </p>
+            </div>
+
+            <!-- Contraseña -->
+            <div>
+                <label class="text-[10px] text-gray-400 uppercase tracking-widest block mb-1.5 font-bold">
+                    Contraseña <span class="text-red-500">*</span>
+                </label>
+                <input id="password" type="password" placeholder="Mínimo 4 caracteres"
+                       class="input-style" required minlength="4" autocomplete="new-password">
+            </div>
+
+            <!-- Confirmar Contraseña -->
+            <div>
+                <label class="text-[10px] text-gray-400 uppercase tracking-widest block mb-1.5 font-bold">
+                    Confirmar Contraseña <span class="text-red-500">*</span>
+                </label>
+                <input id="password2" type="password" placeholder="Repite la contraseña"
+                       class="input-style" required minlength="4" autocomplete="new-password">
+            </div>
+
+            <!-- Submit -->
+            <button type="submit"
+                class="btn-primary w-full mt-4 text-sm font-black uppercase tracking-widest py-4">
+                Crear Cuenta y Continuar →
+            </button>
+        </form>
+
+        <p class="text-center text-[10px] text-gray-600 mt-4">
+            ¿Ya tienes cuenta?
+            <a href="index.html" class="text-cyan-500 hover:text-cyan-400 transition-colors font-bold ml-1">
+                Iniciar sesión
+            </a>
+        </p>
+    </div>
+
+    <script src="registro.js"></script>
+</body>
+</html>

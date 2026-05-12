@@ -1,0 +1,356 @@
+
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guía de Configuración - Fast Food Service</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #06b6d4;
+            border-bottom: 3px solid #06b6d4;
+            padding-bottom: 10px;
+        }
+        h2 {
+            color: #059669;
+            margin-top: 30px;
+        }
+        h3 {
+            color: #0891b2;
+            margin-top: 20px;
+        }
+        code {
+            background: #f0f0f0;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+        }
+        .code-block {
+            background: #1e1e1e;
+            color: #d4d4d4;
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+            margin: 15px 0;
+            border-left: 4px solid #06b6d4;
+        }
+        .step {
+            background: #e8f8f5;
+            border-left: 4px solid #059669;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 5px;
+        }
+        .warning {
+            background: #fff5f0;
+            border-left: 4px solid #f97316;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 5px;
+        }
+        .success {
+            background: #f0fdf4;
+            border-left: 4px solid #059669;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 5px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+        th {
+            background: #f0f0f0;
+            font-weight: bold;
+            color: #333;
+        }
+        tr:nth-child(even) {
+            background: #fafafa;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🍔 Fast Food Service - Guía de Implementación</h1>
+        
+        <h2>📋 Tabla de Contenidos</h2>
+        <ul>
+            <li><a href="#paso1">Paso 1: Instalar XAMPP/WAMP</a></li>
+            <li><a href="#paso2">Paso 2: Crear la Base de Datos</a></li>
+            <li><a href="#paso3">Paso 3: Configurar la conexión</a></li>
+            <li><a href="#paso4">Paso 4: Modificar formularios HTML</a></li>
+            <li><a href="#paso5">Paso 5: Probar el sistema</a></li>
+        </ul>
+
+        <!-- PASO 1 -->
+        <div id="paso1" class="step">
+            <h2>✅ Paso 1: Instalar XAMPP o WAMP (si no lo tienes)</h2>
+            <p><strong>¿Qué es?</strong> Es un servidor local que corre PHP y MySQL en tu computadora.</p>
+            <h3>Opción A: XAMPP (Recomendado)</h3>
+            <ol>
+                <li>Descarga desde: <a href="https://www.apachefriends.org/" target="_blank">https://www.apachefriends.org/</a></li>
+                <li>Instala el programa</li>
+                <li>Abre XAMPP Control Panel</li>
+                <li>Inicia <code>Apache</code> y <code>MySQL</code></li>
+                <li>Verifica que estén en verde ✅</li>
+            </ol>
+            <h3>Opción B: WAMP</h3>
+            <ol>
+                <li>Descarga desde: <a href="http://www.wampserver.com/" target="_blank">http://www.wampserver.com/</a></li>
+                <li>Sigue el asistente de instalación</li>
+                <li>Inicia los servicios</li>
+            </ol>
+        </div>
+
+        <!-- PASO 2 -->
+        <div id="paso2" class="step">
+            <h2>✅ Paso 2: Crear la Base de Datos</h2>
+            <h3>Opción A: Usando phpMyAdmin (Visual)</h3>
+            <ol>
+                <li>Abre tu navegador y ve a <code>http://localhost/phpmyadmin</code></li>
+                <li>Haz clic en <strong>"Nueva"</strong> o <strong>"New"</strong></li>
+                <li>Nombre de BD: <code>fastfood_db</code></li>
+                <li>Presiona <strong>Crear</strong></li>
+                <li>Haz clic en la BD creada</li>
+                <li>Ve a la pestaña <strong>"SQL"</strong></li>
+                <li>Copia y pega el contenido del archivo <code>database.sql</code></li>
+                <li>Presiona <strong>"Ejecutar"</strong> ✅</li>
+            </ol>
+
+            <h3>Opción B: Desde terminal (Avanzado)</h3>
+            <div class="code-block">
+mysql -u root -p &lt; database.sql
+            </div>
+        </div>
+
+        <!-- PASO 3 -->
+        <div id="paso3" class="step">
+            <h2>✅ Paso 3: Configurar la Conexión</h2>
+            <p>El archivo <code>conexion.php</code> contiene la configuración. Verifica que sea:</p>
+            <div class="code-block">
+$host = "localhost";
+$user = "root";
+$pass = "";  // Sin contraseña por defecto en XAMPP
+$database = "fastfood_db";
+            </div>
+            <div class="warning">
+                <strong>⚠️ IMPORTANTE (Para producción):</strong>
+                <ul>
+                    <li>Cambia la contraseña de MySQL</li>
+                    <li>Usa credenciales seguras en producción</li>
+                    <li>NO dejes datos sensibles en el código</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- PASO 4 -->
+        <div id="paso4" class="step">
+            <h2>✅ Paso 4: Modificar los Formularios HTML</h2>
+            <h3>Actualizar: <code>registro1.html</code></h3>
+            <p>Reemplaza el formulario actual por este código:</p>
+            <div class="code-block">
+&lt;form id="regForm" action="registrar.php" method="POST"&gt;
+    &lt;div class="form-group"&gt;
+        &lt;input type="text" id="nombre" name="nombre" 
+               placeholder="Nombre completo" required&gt;
+    &lt;/div&gt;
+    &lt;div class="form-group"&gt;
+        &lt;input type="text" id="apellidos" name="apellidos" 
+               placeholder="Apellidos" required&gt;
+    &lt;/div&gt;
+    &lt;div class="form-group"&gt;
+        &lt;input type="tel" id="telefono" name="telefono" 
+               placeholder="Teléfono" required&gt;
+    &lt;/div&gt;
+    &lt;div class="form-group"&gt;
+        &lt;input type="email" id="correo_electronico" 
+               name="correo_electronico" placeholder="Email" required&gt;
+    &lt;/div&gt;
+    &lt;div class="form-group"&gt;
+        &lt;select id="rol" name="rol" required&gt;
+            &lt;option value=""&gt;Selecciona tu rol&lt;/option&gt;
+            &lt;option value="mesero"&gt;Mesero&lt;/option&gt;
+            &lt;option value="cocina"&gt;Cocina&lt;/option&gt;
+            &lt;option value="admin"&gt;Administrador&lt;/option&gt;
+        &lt;/select&gt;
+    &lt;/div&gt;
+    &lt;div class="form-group"&gt;
+        &lt;input type="password" id="password" name="password" 
+               placeholder="Contraseña (min. 4 caracteres)" required&gt;
+    &lt;/div&gt;
+    &lt;div class="form-group"&gt;
+        &lt;input type="password" id="password2" name="password2" 
+               placeholder="Confirmar contraseña" required&gt;
+    &lt;/div&gt;
+    &lt;button type="submit" class="btn-submit"&gt;Registrarse&lt;/button&gt;
+&lt;/form&gt;
+
+&lt;script src="registro.js"&gt;&lt;/script&gt;
+            </div>
+        </div>
+
+        <!-- PASO 5 -->
+        <div id="paso5" class="step">
+            <h2>✅ Paso 5: Probar el Sistema</h2>
+            <h3>5.1 - Estructura de carpetas</h3>
+            <p>Coloca todos los archivos en la carpeta correcta:</p>
+            <table>
+                <tr>
+                    <th>Sistema</th>
+                    <th>Ruta</th>
+                </tr>
+                <tr>
+                    <td>XAMPP</td>
+                    <td><code>C:\xampp\htdocs\PROBANDO-PROBANDO\</code></td>
+                </tr>
+                <tr>
+                    <td>WAMP</td>
+                    <td><code>C:\wamp\www\PROBANDO-PROBANDO\</code></td>
+                </tr>
+                <tr>
+                    <td>Linux</td>
+                    <td><code>/var/www/html/PROBANDO-PROBANDO/</code></td>
+                </tr>
+            </table>
+
+            <h3>5.2 - Acceder al sistema</h3>
+            <ol>
+                <li>Abre tu navegador</li>
+                <li>Ve a: <code>http://localhost/PROBANDO-PROBANDO/index.html</code></li>
+                <li>Haz clic en <strong>"Registrarse"</strong></li>
+                <li>Completa el formulario ✅</li>
+            </ol>
+
+            <h3>5.3 - Verificar en phpMyAdmin</h3>
+            <ol>
+                <li>Abre <code>http://localhost/phpmyadmin</code></li>
+                <li>Ve a <code>fastfood_db → empleados</code></li>
+                <li>Verifica que tu usuario aparezca en la tabla ✅</li>
+            </ol>
+        </div>
+
+        <!-- ARCHIVOS CREADOS -->
+        <div class="success">
+            <h2>📁 Archivos Creados (Nuevos)</h2>
+            <p>Estos archivos han sido creados en tu repositorio:</p>
+            <table>
+                <tr>
+                    <th>Archivo</th>
+                    <th>Descripción</th>
+                </tr>
+                <tr>
+                    <td><code>database.sql</code></td>
+                    <td>Script para crear la BD y tablas</td>
+                </tr>
+                <tr>
+                    <td><code>conexion.php</code></td>
+                    <td>Conexión a MySQL</td>
+                </tr>
+                <tr>
+                    <td><code>registrar.php</code></td>
+                    <td>API para registrar usuarios</td>
+                </tr>
+                <tr>
+                    <td><code>login.php</code></td>
+                    <td>API para login de usuarios</td>
+                </tr>
+                <tr>
+                    <td><code>crear_pedido.php</code></td>
+                    <td>API para crear pedidos</td>
+                </tr>
+                <tr>
+                    <td><code>obtener_pedidos.php</code></td>
+                    <td>API para obtener pedidos</td>
+                </tr>
+                <tr>
+                    <td><code>actualizar_pedido.php</code></td>
+                    <td>API para actualizar estado de pedidos</td>
+                </tr>
+                <tr>
+                    <td><code>GUIA.html</code></td>
+                    <td>Esta guía (archivable)</td>
+                </tr>
+            </table>
+        </div>
+
+        <!-- PRÓXIMOS PASOS -->
+        <h2>🚀 Próximos Pasos</h2>
+        <ol>
+            <li>✅ Instalar XAMPP/WAMP</li>
+            <li>✅ Crear base de datos con <code>database.sql</code></li>
+            <li>✅ Probar el registro</li>
+            <li>➡️ Implementar JavaScript para conectar con las APIs</li>
+            <li>➡️ Crear dashboard de administración</li>
+            <li>➡️ Diseñar reportes</li>
+            <li>➡️ Desplegar en servidor web (Heroku, AWS, etc.)</li>
+        </ol>
+
+        <!-- PROBLEMAS COMUNES -->
+        <h2>❌ Problemas Comunes</h2>
+        
+        <h3>❓ "Error de conexión a base de datos"</h3>
+        <div class="warning">
+            <ul>
+                <li>Verifica que MySQL esté corriendo (XAMPP/WAMP)</li>
+                <li>Confirma que la BD <code>fastfood_db</code> existe</li>
+                <li>Revisa las credenciales en <code>conexion.php</code></li>
+            </ul>
+        </div>
+
+        <h3>❓ "Error 404 - Archivo no encontrado"</h3>
+        <div class="warning">
+            <ul>
+                <li>Verifica la ruta completa en el navegador</li>
+                <li>Asegúrate de colocar los archivos en <code>htdocs</code> (XAMPP)</li>
+                <li>Los nombres de archivos son sensibles a mayúsculas en Linux</li>
+            </ul>
+        </div>
+
+        <h3>❓ "El registro no funciona"</h3>
+        <div class="warning">
+            <ul>
+                <li>Abre la consola del navegador (F12)</li>
+                <li>Verifica qué error muestra</li>
+                <li>Confirma que <code>registrar.php</code> existe</li>
+            </ul>
+        </div>
+
+        <!-- REFERENCIAS -->
+        <h2>📚 Referencias Útiles</h2>
+        <ul>
+            <li><a href="https://www.php.net/" target="_blank">Documentación de PHP</a></li>
+            <li><a href="https://dev.mysql.com/" target="_blank">Documentación de MySQL</a></li>
+            <li><a href="https://www.apachefriends.org/" target="_blank">XAMPP Official</a></li>
+            <li><a href="http://www.wampserver.com/" target="_blank">WAMP Official</a></li>
+        </ul>
+
+        <hr>
+        <p style="text-align: center; color: #999; margin-top: 30px;">
+            <strong>Fast Food Service v2.0</strong> - Generado automáticamente<br>
+            Última actualización: 2026-05-11
+        </p>
+    </div>
+</body>
+</html>

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Seleccionar Rol — Fast Food</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="min-h-screen flex items-center justify-center p-4">
+
+    <div class="card text-center border-t-4 border-cyan-500 w-full max-w-sm fade-in">
+
+        <!-- Avatar + Nombre -->
+        <div class="mb-8">
+            <div id="user-avatar"
+                 class="w-16 h-16 rounded-2xl bg-cyan-600 flex items-center justify-center
+                        text-white text-2xl font-black mx-auto mb-4 shadow-lg shadow-cyan-900/30">
+                ?
+            </div>
+            <p class="text-cyan-500 text-[10px] font-black uppercase tracking-[0.3em] mb-0.5">
+                Hola,
+            </p>
+            <h2 class="text-3xl font-black text-white"
+                style="font-family:'Bebas Neue',sans-serif; letter-spacing:0.05em;">
+                <span id="nombreUsuario">Empleado</span>
+            </h2>
+            <p class="text-xs text-gray-500 mt-1">¿Cómo vas a trabajar hoy?</p>
+        </div>
+
+        <!-- Opciones de Rol -->
+        <div class="grid gap-3">
+
+            <a href="meseros1.html"
+               class="btn-primary py-5 font-black uppercase tracking-widest text-sm
+                      flex items-center justify-center gap-3">
+                <span class="text-2xl">🧑‍🍽️</span>
+                <span>Soy Mesero</span>
+            </a>
+
+            <a href="cosina1.html"
+               class="block bg-amber-600 hover:bg-amber-500 text-white font-black py-5 rounded-lg
+                      text-center uppercase text-sm tracking-widest transition-all
+                      flex items-center justify-center gap-3 shadow-lg shadow-amber-900/20">
+                <span class="text-2xl">👨‍🍳</span>
+                <span>Soy Cocinero</span>
+            </a>
+
+            <a href="admin.html"
+               class="block bg-violet-700 hover:bg-violet-600 text-white font-black py-5 rounded-lg
+                      text-center uppercase text-sm tracking-widest transition-all
+                      flex items-center justify-center gap-3 shadow-lg shadow-violet-900/20">
+                <span class="text-2xl">📊</span>
+                <span>Panel Admin</span>
+            </a>
+
+        </div>
+
+        <!-- Cerrar sesión -->
+        <button onclick="logout()"
+            class="text-[10px] text-gray-600 hover:text-red-400 mt-6 uppercase tracking-widest
+                   transition-colors font-bold block w-full text-center py-2">
+            Cerrar Sesión ×
+        </button>
+    </div>
+
+    <script src="registro.js"></script>
+    <script>
+        (function() {
+            const session = localStorage.getItem('ff_session') || localStorage.getItem('usuario');
+            if (!session) {
+                window.location.href = 'index.html';
+                return;
+            }
+            document.getElementById('nombreUsuario').textContent = session;
+            const avatar = document.getElementById('user-avatar');
+            if (avatar) avatar.textContent = session.charAt(0).toUpperCase();
+        })();
+    </script>
+</body>
+</html>

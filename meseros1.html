@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comanda Digital — Fast Food</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="text-white min-h-screen flex flex-col">
+
+    <!-- ─── HEADER ─── -->
+    <header class="w-full bg-gray-900/80 backdrop-blur-md border-b border-gray-800 px-4 py-3 sticky top-0 z-40">
+        <div class="max-w-4xl mx-auto flex justify-between items-center">
+            <div class="flex items-center gap-3">
+                <div class="w-9 h-9 rounded-xl bg-cyan-600 flex items-center justify-center
+                            text-white text-sm font-black flex-shrink-0" id="user-avatar-letter">
+                    M
+                </div>
+                <div>
+                    <p class="text-cyan-400 font-bold text-[9px] uppercase tracking-widest leading-none">
+                        Mesero Activo
+                    </p>
+                    <p id="userName" class="text-white font-black text-sm leading-tight mt-0.5">
+                        Cargando...
+                    </p>
+                </div>
+            </div>
+
+            <div class="flex items-center gap-2">
+                <!-- Pedidos en cola (badge) -->
+                <div id="orders-in-queue" class="hidden items-center gap-1.5 bg-amber-500/10 border
+                     border-amber-500/30 text-amber-400 px-3 py-1.5 rounded-lg text-[10px] font-black uppercase">
+                    <span class="animate-pulse">●</span>
+                    <span id="queue-count">0</span> en cocina
+                </div>
+                <a href="roles1.html"
+                   class="bg-gray-800 hover:bg-red-900/40 text-gray-400 hover:text-red-400
+                          px-3 py-2 rounded-lg text-[10px] font-black uppercase transition-all border border-gray-700">
+                    ← Rol
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- ─── MAIN ─── -->
+    <main class="flex-1 max-w-4xl mx-auto w-full grid grid-cols-1 md:grid-cols-3 gap-5 p-4">
+
+        <!-- ── COLUMNA IZQUIERDA: MENÚ ── -->
+        <div class="md:col-span-2">
+            <div class="card border-t-4 border-cyan-500 h-full flex flex-col">
+
+                <!-- Filtros + Mesa -->
+                <div class="flex justify-between items-center mb-5 flex-wrap gap-3">
+                    <h2 class="font-black uppercase text-lg tracking-tight text-white">Menú</h2>
+                    <select id="mesa"
+                        class="bg-gray-800 border border-gray-700 text-white text-xs rounded-xl
+                               px-3 py-2.5 outline-none focus:ring-2 focus:ring-cyan-500 font-bold">
+                        <option value="Mesa 1">🪑 Mesa 1</option>
+                        <option value="Mesa 2">🪑 Mesa 2</option>
+                        <option value="Mesa 3">🪑 Mesa 3</option>
+                        <option value="Mesa 4">🪑 Mesa 4</option>
+                        <option value="Mesa 5">🪑 Mesa 5</option>
+                        <option value="Para Llevar">📦 Para Llevar</option>
+                        <option value="Domicilio">🛵 Domicilio</option>
+                    </select>
+                </div>
+
+                <!-- Menú renderizado por JS -->
+                <div id="contenedor-menu"
+                     class="flex-1 overflow-y-auto pr-1 custom-scrollbar space-y-1"
+                     style="max-height: calc(100vh - 280px);">
+                    <!-- Ítems del menú aquí -->
+                </div>
+
+            </div>
+        </div>
+
+        <!-- ── COLUMNA DERECHA: TICKET ── -->
+        <div class="md:col-span-1">
+            <div class="card border-l-4 border-cyan-500 sticky top-[70px] flex flex-col"
+                 style="min-height: 440px; max-height: calc(100vh - 90px);">
+
+                <!-- Header ticket -->
+                <div class="flex justify-between items-center border-b border-gray-800 pb-3 mb-4">
+                    <div>
+                        <h2 class="text-white font-black uppercase text-xs tracking-widest">Pedido</h2>
+                        <p id="mesa-display" class="text-cyan-400 text-[10px] font-bold mt-0.5">Mesa 1</p>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <!-- Badge contador de ítems -->
+                        <span id="item-count"
+                              class="w-6 h-6 bg-cyan-600 rounded-full text-white text-[10px] font-black
+                                     items-center justify-center hidden flex-shrink-0">
+                            0
+                        </span>
+                        <button onclick="clearOrder()"
+                            class="text-[9px] text-gray-600 hover:text-red-400 uppercase font-black
+                                   transition-colors px-2 py-1 rounded hover:bg-red-900/10">
+                            Vaciar
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Lista de ítems -->
+                <div id="lista-seleccionada"
+                     class="flex-grow overflow-y-auto space-y-2 mb-4 pr-0.5 custom-scrollbar"
+                     style="min-height: 120px;">
+                </div>
+
+                <!-- Notas + Botón -->
+                <div class="space-y-3 mt-auto">
+                    <textarea id="observaciones"
+                        placeholder="📝 Notas: sin cebolla, término medio..."
+                        class="w-full bg-gray-800 border border-gray-700 rounded-xl p-2.5 text-xs
+                               text-white focus:ring-1 focus:ring-cyan-500 outline-none resize-none
+                               placeholder-gray-600"
+                        rows="2">
+                    </textarea>
+
+                    <div class="border-t border-gray-800 pt-3">
+                        <div class="flex justify-between items-baseline mb-3">
+                            <span class="text-xs text-gray-500 uppercase font-black tracking-wider">Total</span>
+                            <span id="total-precio" class="text-2xl font-black text-cyan-400 leading-none">
+                                $0
+                            </span>
+                        </div>
+                        <button id="btn-enviar" onclick="submitOrder()"
+                            class="w-full bg-cyan-600 hover:bg-cyan-500 text-white font-black py-4
+                                   rounded-xl transition-all shadow-lg shadow-cyan-900/30 uppercase
+                                   text-[11px] tracking-widest active:scale-95">
+                            🚀 Confirmar Pedido
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </main>
+
+    <script src="registro.js"></script>
+    <script>
+        // Sincronizar nombre de mesa en el ticket
+        document.getElementById('mesa')?.addEventListener('change', function() {
+            const display = document.getElementById('mesa-display');
+            if (display) display.textContent = this.value;
+        });
+
+        // Mostrar pedidos activos en cocina
+        function updateQueueBadge() {
+            const orders = JSON.parse(localStorage.getItem('ff_orders') || '[]');
+            const badge  = document.getElementById('orders-in-queue');
+            const count  = document.getElementById('queue-count');
+            if (!badge) return;
+            if (orders.length > 0) {
+                badge.classList.remove('hidden');
+                badge.classList.add('flex');
+                if (count) count.textContent = orders.length;
+            } else {
+                badge.classList.add('hidden');
+                badge.classList.remove('flex');
+            }
+        }
+
+        updateQueueBadge();
+        setInterval(updateQueueBadge, 3000);
+
+        // Avatar del usuario
+        const session = localStorage.getItem('ff_session') || localStorage.getItem('usuario');
+        const avatarLetter = document.getElementById('user-avatar-letter');
+        if (session && avatarLetter) avatarLetter.textContent = session.charAt(0).toUpperCase();
+    </script>
+</body>
+</html>
